@@ -1,0 +1,28 @@
+{
+    "format": "CHIP-0007",
+    "name": "",
+    "description": "",
+    "minting_tool": "TEAM BOOT",
+    "sensitive_content": false,
+    "series_number": "",
+    "series_total": 449,
+    "attributes": [
+        {
+            "trait_type": "Gender",
+            "value": ""
+        }
+    ],
+    "collection": {
+        "name": "Zuri NFT Tickets for Free Lunch",
+        "id": "b774f676-c1d5-422e-beed-00ef5510c64d",
+        "attributes": [
+            {
+                "type": "description",
+                "value": "Rewards for accomplishments during HNGi9."
+            }
+        ]
+    },
+    "data": {
+        "hash": "a34a91a395b5799efe14ab164d5bb2bb9640bc8e36e35621ef250b0007720f80"
+    }
+}
