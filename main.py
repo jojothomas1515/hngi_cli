@@ -24,6 +24,11 @@ def convert_to_json():
     else:
         os.mkdir("NFT_JSON")
 
+    if os.path.exists('filename.output.csv'):
+        os.remove('filename.output.csv')
+    else:
+        pass
+
     # open the csv file name passed as argument
     with open(f, 'r') as f1:
         csv_file = csv.DictReader(f1)
@@ -42,6 +47,11 @@ def convert_to_json():
 
     with open(f, 'r') as f1:
         csv_file = csv.DictReader(f1)
+        fieldnames = [i for i in csv_file.fieldnames] + ['HASH']
+
+        with open('filename.output.csv', 'w') as outputfile:
+            writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
+            writer.writeheader()
 
         for row in csv_file:
             if row['TEAM NAMES']:
@@ -93,7 +103,12 @@ def convert_to_json():
                         pass
                     json_form['attributes'].append({"trait_type": s1, "value": s2})
             hash = hashlib.sha256(str(json_form).encode()).hexdigest()
-            json_form['hash'] = hash
+            # json_form['hash'] = hash
+            row['HASH'] = hash
+
+            with open('filename.output.csv', 'a') as outputfile:
+                writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
+                writer.writerow(row)
 
             with open(f'NFT_JSON/{row["Filename"]}.json', 'w') as json_file:
                 json_file.write(json.dumps(json_form, indent=4))

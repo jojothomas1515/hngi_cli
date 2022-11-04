@@ -1,0 +1,57 @@
+{
+    "format": "CHIP-0007",
+    "name": "abang the wordsmith",
+    "description": "Abang is a storyteller and connoisseur of words.",
+    "minting_tool": "TEAM AXE",
+    "sensitive_content": false,
+    "series_number": "390",
+    "series_total": 399,
+    "attributes": [
+        {
+            "trait_type": "Gender",
+            "value": "Male"
+        },
+        {
+            "trait_type": "hair",
+            "value": " shiny bald"
+        },
+        {
+            "trait_type": "eyes",
+            "value": " none"
+        },
+        {
+            "trait_type": "teeth",
+            "value": " none"
+        },
+        {
+            "trait_type": "clothing",
+            "value": " whitish blue ankara"
+        },
+        {
+            "trait_type": "accessories",
+            "value": " none"
+        },
+        {
+            "trait_type": "expression",
+            "value": " amused"
+        },
+        {
+            "trait_type": "strength",
+            "value": " ironclaw"
+        },
+        {
+            "trait_type": "weakness",
+            "value": " wood"
+        }
+    ],
+    "collection": {
+        "name": "Zuri NFT Tickets for Free Lunch",
+        "id": "b774f676-c1d5-422e-beed-00ef5510c64d",
+        "attributes": [
+            {
+                "type": "description",
+                "value": "Rewards for accomplishments during HNGi9."
+            }
+        ]
+    }
+}
