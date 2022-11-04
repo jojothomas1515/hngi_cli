@@ -4,6 +4,7 @@ import hashlib
 import json
 import sys
 import os
+import getopt
 
 
 def convert_to_json():
@@ -11,6 +12,23 @@ def convert_to_json():
     teamName = ''
     teamCount = 0
     totalNum = 0
+    opts = []
+
+    savefile = False
+
+    # check for command line options
+    try:
+        opts, args = getopt.getopt(sys.argv[-1:],'-j')
+    except Exception as e:
+        print('invalid command')
+        pass
+
+    if opts:
+        for opt, args in opts:
+            if opt in ['-j', '--json']:
+                savefile = True
+
+
     if os.path.exists(sys.argv[1]):
         f = f'{sys.argv[1]}'
         print("will start process now ")
@@ -19,7 +37,6 @@ def convert_to_json():
 
     # Checks if the NFT_JSON directory exist and create one if it doesnt
     if os.path.exists('NFT_JSON'):
-        print('yes')
         pass
     else:
         os.mkdir("NFT_JSON")
@@ -45,15 +62,22 @@ def convert_to_json():
             else:
                 totalNum += 1;
 
+    # opens the csv file and convert it to a dictionary
     with open(f, 'r') as f1:
         csv_file = csv.DictReader(f1)
+
+        # make a list of all field names in csv and appent the field name hash to it
         fieldnames = [i for i in csv_file.fieldnames] + ['HASH']
 
+        # open or create filename.output.csv and write in the header of each columns
         with open('filename.output.csv', 'w') as outputfile:
             writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
             writer.writeheader()
 
+        # formatting the csv row to a json format
         for row in csv_file:
+
+            # use to set the appropriate minting tool for each json
             if row['TEAM NAMES']:
                 teamName = row['TEAM NAMES']
 
@@ -63,6 +87,7 @@ def convert_to_json():
             gender = row['Gender']
             series_total = totalNum
 
+            # json format
             json_form = {
 
                 "format": "CHIP-0007",
@@ -90,6 +115,7 @@ def convert_to_json():
                 },
             }
 
+            # Iterate through attributes and generate the proper json attributes
             if row['Attributes']:
                 j = row['Attributes']
                 j = j.split(';')
@@ -110,8 +136,10 @@ def convert_to_json():
                 writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
                 writer.writerow(row)
 
-            with open(f'NFT_JSON/{row["Filename"]}.json', 'w') as json_file:
-                json_file.write(json.dumps(json_form, indent=4))
+            # save the json of each nft to a file
+            if (savefile):
+                with open(f'NFT_JSON/{row["Filename"]}.json', 'w') as json_file:
+                    json_file.write(json.dumps(json_form, indent=4))
 
 
 convert_to_json()
