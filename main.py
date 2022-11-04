@@ -36,10 +36,11 @@ def convert_to_json():
         print("File not found")
 
     # Checks if the NFT_JSON directory exist and create one if it doesnt
-    if os.path.exists('NFT_JSON'):
-        pass
-    else:
-        os.mkdir("NFT_JSON")
+    if (savefile):
+        if os.path.exists('NFT_JSON'):
+            pass
+        else:
+            os.mkdir("NFT_JSON")
 
     if os.path.exists('filename.output.csv'):
         os.remove('filename.output.csv')
@@ -141,5 +142,6 @@ def convert_to_json():
                 with open(f'NFT_JSON/{row["Filename"]}.json', 'w') as json_file:
                     json_file.write(json.dumps(json_form, indent=4))
 
+    print("process complete")
 
 convert_to_json()
