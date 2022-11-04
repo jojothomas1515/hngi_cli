@@ -17,6 +17,13 @@ def convert_to_json():
     else:
         print("File not found")
 
+    # Checks if the NFT_JSON directory exist and create one if it doesnt
+    if os.path.exists('NFT_JSON'):
+        print('yes')
+        pass
+    else:
+        os.mkdir("NFT_JSON")
+
     # open the csv file name passed as argument
     with open(f, 'r') as f1:
         csv_file = csv.DictReader(f1)
@@ -26,9 +33,9 @@ def convert_to_json():
         also counting the rows with valid input """
 
         for row in csv_file:
-            if row['Series Number'].lower().startswith('team'):
+            if row['TEAM NAMES'].lower().startswith('team'):
                 teamCount += 1
-            elif row['Series Number'].lower() == None:
+            elif row['TEAM NAMES'].lower() == None:
                 pass
             else:
                 totalNum += 1;
@@ -37,8 +44,8 @@ def convert_to_json():
         csv_file = csv.DictReader(f1)
 
         for row in csv_file:
-            if row['Series Number'].lower().startswith('team'):
-                teamName = row['Series Number']
+            if row['TEAM NAMES']:
+                teamName = row['TEAM NAMES']
 
             name = row['Name']
             description = row['Description']
@@ -71,14 +78,11 @@ def convert_to_json():
                         }
                     ]
                 },
-                "data": {
-                    "example_data": "VGhpcyBpcyBhbiBleGFtcGxlIG9mIGRhdGEgdGhhdCB5b3UgbWlnaHQgd2FudCB0byBzdG9yZSBpbiB0aGUgZGF0YSBvYmplY3QuIE5GVCBhdHRyaWJ1dGVzIHdoaWNoIGFyZSBub3QgaHVtYW4gcmVhZGFibGUgc2hvdWxkIGJlIHBsYWNlZCB3aXRoaW4gdGhpcyBvYmplY3QsIGFuZCB0aGUgYXR0cmlidXRlcyBhcnJheSB1c2VkIG9ubHkgZm9yIGluZm9ybWF0aW9uIHdoaWNoIGlzIGludGVuZGVkIHRvIGJlIHJlYWQgYnkgdGhlIHVzZXIu"
-                }
             }
 
             if row['Attributes']:
                 j = row['Attributes']
-                j = j.split(',')
+                j = j.split(';')
                 for i in j:
                     tmp = i.split(':')
                     s1 = tmp[0].strip(" ")
@@ -89,9 +93,9 @@ def convert_to_json():
                         pass
                     json_form['attributes'].append({"trait_type": s1, "value": s2})
             hash = hashlib.sha256(str(json_form).encode()).hexdigest()
-            json_form['data'] = ({'hash':hash})
+            json_form['hash'] = hash
 
-            with open(f'{row["Filename"]}.json', 'w') as json_file:
+            with open(f'NFT_JSON/{row["Filename"]}.json', 'w') as json_file:
                 json_file.write(json.dumps(json_form, indent=4))
 
 
